@@ -3,11 +3,11 @@ import './About.scss';
 import {Avatar, Box} from "@material-ui/core";
 import avatar from "../../assets/images/avatar.png";
 import {Email, GitHub, LinkedIn, LocationOn, Phone, Telegram} from "@material-ui/icons";
-import Title from "../../components/Title/Title";
+import Title from "../Title/Title";
 import { Link } from "@material-ui/core";
-import Skill from "../../components/Skill/Skill";
-import Institution from "../../components/Institution/Institution";
-import Work from "../../components/Work/Work";
+import Skill from "../Skill/Skill";
+import Institution from "../Institution/Institution";
+import Work from "../Work/Work";
 
 //const _star=`\u2B50`
 

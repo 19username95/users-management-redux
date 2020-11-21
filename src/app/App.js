@@ -6,14 +6,11 @@ import {
     Redirect
 } from 'react-router-dom';
 import './App.scss';
-import Navigation from "../components/Navigation/Navigation";
-import About from "../pages/About/About";
+import { Navigation } from "../components";
 import { createMuiTheme, MuiThemeProvider } from "@material-ui/core";
-import {Provider} from "react-redux";
-import {store} from "../store";
-import UsersListPage from "../pages/UsersListPage/UsersListPage";
-import {addUser} from "../actions/actions";
-import RegistrationPage from "../pages/RegistrationPage";
+import { Provider } from "react-redux";
+import { store } from "../store";
+import { About, UsersList, Registration } from "../pages";
 
 const theme = createMuiTheme({
     palette: {
@@ -23,22 +20,6 @@ const theme = createMuiTheme({
 });
 
 class App extends React.Component {
-    constructor(props) {
-        super(props);
-
-        // initialize state
-        this.state = { users: [] }
-    }
-
-    componentDidMount() {
-        if (localStorage.hasOwnProperty("users")) {
-            // get users from local storage
-            const users = JSON.parse(localStorage.getItem("users"));
-            this.setState({ users })
-        }
-    }
-
-
     render() {
         return (
             <Provider store={store}>
@@ -47,10 +28,10 @@ class App extends React.Component {
                         <Navigation />
                         <Switch>
                             <Route path='/users-list'>
-                                <UsersListPage users={this.state.users} />
+                                <UsersList />
                             </Route>
                             <Route path='/add-user'>
-                                <RegistrationPage addUser={addUser} />
+                                <Registration />
                             </Route>
                             <Route path='/about'>
                                 <About />

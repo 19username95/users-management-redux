@@ -8,7 +8,7 @@ const initialState = {
             registrationDate: '20.11.2020'
         },
         {
-            id: 1,
+            id: 2,
             name: "Jane",
             surname: "Doe",
             sex: "female",
