@@ -7,13 +7,13 @@ import {
 } from 'react-router-dom';
 import './App.scss';
 import Navigation from "../components/Navigation/Navigation";
-import Registration from "../pages/Registration/Registration";
 import About from "../pages/About/About";
 import { createMuiTheme, MuiThemeProvider } from "@material-ui/core";
 import {Provider} from "react-redux";
 import {store} from "../store";
 import UsersListPage from "../pages/UsersListPage/UsersListPage";
 import {addUser} from "../actions/actions";
+import RegistrationPage from "../pages/RegistrationPage";
 
 const theme = createMuiTheme({
     palette: {
@@ -50,7 +50,7 @@ class App extends React.Component {
                                 <UsersListPage users={this.state.users} />
                             </Route>
                             <Route path='/add-user'>
-                                <Registration addUser={addUser} />
+                                <RegistrationPage addUser={addUser} />
                             </Route>
                             <Route path='/about'>
                                 <About />

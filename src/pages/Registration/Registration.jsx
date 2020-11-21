@@ -4,7 +4,6 @@ import {
     Checkbox,
     FormControl,
     FormControlLabel,
-    FormHelperText,
     FormLabel,
     RadioGroup,
     Radio,
@@ -12,120 +11,34 @@ import {
     Box
 } from "@material-ui/core";
 import InputMask from 'react-input-mask';
-import _ from 'lodash';
 import './Registration.scss';
 import Title from "../../components/Title/Title";
-import IncrementService from '../../helpers/IncrementService'
-import toast, { ToastCustomContainer }  from "../../components/Toast/Toast";
-import { connect } from "react-redux";
-import {addUser, changeName} from "../../actions/actions";
+import { ToastCustomContainer }  from "../../components/Toast/Toast";
 
-const initData = {
-    name: "",
-    surname: "",
-    sex: "",
-    card: "",
-    isLoyalty: false,
-    coupon: "",
-    errors: {}
-};
 
 class Registration extends Component {
-    constructor(props) {
-        super(props);
-
-        this.state = { ...initData };
-    }
-
-    handleChange = ({ target }) => {
-        const value = target.type === 'checkbox' ? target.checked : target.value;
-
-        // hide error message
-        const { errors } = this.state
-        delete errors[target.name]
-
-        this.setState({
-            [target.name]: value,
-            errors
-        });
-    };
-
-    validate({
-        name,
-        surname,
-        sex,
-    }) {
-        const errors = {}
-
-        const regex = new RegExp(/^[A-Za-z]+$/)
-
-        if(!regex.test(name) || name.trim().length < 3) {
-            errors.name = 'Name should be at least 3 characters length and contain only latin characters.'
-        }
-
-        if(!regex.test(surname)) {
-            errors.surname = 'Surname should contain only latin characters.'
-        }
-
-        if(!sex.length) {
-            errors.sex = 'Gender is required.'
-        }
-
-        return errors;
-    }
-
-    handleSubmit = (e) => {
-        e.preventDefault()
-        const user = {
-            ..._.pick(this.state, [
-                'name',
-                'surname',
-                'sex',
-                'card',
-                'isLoyalty',
-                'coupon'
-            ]),
-            id: IncrementService.getNextId(),
-            registrationDate: new Date().toLocaleDateString()
-        }
-
-        const errors = this.validate(user)
-        if (Object.keys(errors).length) {
-            return this.setState({ errors })
-        }
-
-        this.props.addUser(user);
-
-        toast.success(`User #${user.id}: ${user.name} ${user.surname} successfully added.`)
-
-        return this.setState({...initData});
-    };
-
     render() {
         const {
-            name,
             surname,
             sex,
             card,
             isLoyalty,
-            coupon,
-            errors
-        } = this.state;
+            coupon
+        } = this.props.initState;
         return (
             <Box className='RegistrationSection'>
                 <Title className='RegistrationSection-Title'>Add user</Title>
                 <ToastCustomContainer />
                 <form className='RegistrationForm'
-                      onSubmit={this.handleSubmit}>
+                      onSubmit={this.props.handleSubmit}>
                     <TextField
                         className='RegistrationForm-Field RegistrationForm-Field_name'
                         name="name"
                         label="Name"
                         required
-                        value={name}
-                        onChange={this.handleChange}
-                        error={!!errors.name}
-                        helperText={errors.name}
+                        value={this.props.nameValue}
+                        onChange={(e) =>
+                            this.props.handleChangeName(e.target.value)}
                     />
                         <TextField
                     className='RegistrationForm-Field RegistrationForm-Field_surname'
@@ -133,21 +46,18 @@ class Registration extends Component {
                     label="Surname"
                     required
                     value={surname}
-                    onChange={this.handleChange}
-                    error={!!errors.surname}
-                    helperText={errors.surname}
+                    onChange={this.props.handleChange}
                         />
                     <FormControl component="fieldset"
                                  className=' RegistrationForm-RadioField RegistrationForm-Field_gender'
                                  required
-                                 error={!!errors.sex}
                     >
                         <FormLabel className='RegistrationForm-RadioFieldLabel'
                                    component="legend">Gender</FormLabel>
                         <RadioGroup className='RegistrationForm-RadioFieldGroup'
                                     name="sex"
                                     value={sex}
-                                    onChange={this.handleChange}>
+                                    onChange={this.props.handleChange}>
                             <FormControlLabel className='RegistrationForm-RadioButton'
                                               value="female"
                                               control={<Radio />}
@@ -161,7 +71,6 @@ class Registration extends Component {
                                               control={<Radio />}
                                               label="Other"/>
                         </RadioGroup>
-                        {!!errors.sex ? <FormHelperText>{errors.sex}</FormHelperText> : null}
                     </FormControl>
                     <FormControl className='RegistrationForm-Field RegistrationForm-Field_card'>
                         <FormLabel className='RegistrationForm-CardLabel'
@@ -171,7 +80,7 @@ class Registration extends Component {
                             name="card"
                             label="Card"
                             value={card}
-                            onChange={this.handleChange}
+                            onChange={this.props.handleChange}
                             mask='9999 9999 9999 9999'
                             maskChar='_'
                             alwaysShowMask='true'/>
@@ -182,7 +91,7 @@ class Registration extends Component {
                         control={
                         <Checkbox checked={isLoyalty}
                                   name="isLoyalty"
-                                  onChange={this.handleChange}/>
+                                  onChange={this.props.handleChange}/>
                         }
                         label='Loyalty program'/>
                     {isLoyalty ?
@@ -192,7 +101,7 @@ class Registration extends Component {
                         label="Coupon"
                         required
                         value={coupon}
-                        onChange={this.handleChange}/>
+                        onChange={this.props.handleChange}/>
                         : null}
                     <Button
                         className='RegistrationForm-Button'
@@ -206,15 +115,4 @@ class Registration extends Component {
     }
 }
 
-const mapStateToProps = (state) => ({
-    name: state.name,
-})
-
-const mapDispatchToProps = (dispatch) => {
-    return {
-        addUser: (userData) => dispatch(addUser(userData)),
-        changeName: (name) => dispatch(changeName(name))
-    };
-}
-
-export default connect(null, mapDispatchToProps)(Registration)
+export default Registration
