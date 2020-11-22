@@ -13,10 +13,8 @@ import {
 } from "@material-ui/core";
 import InputMask from 'react-input-mask';
 import _ from 'lodash';
-import './Registration.scss';
-import Title from "../Title/Title";
-import IncrementService from '../../helpers/IncrementService'
-import toast, { ToastCustomContainer }  from "../Toast/Toast";
+import './UserInfo.scss';
+import { validateUser } from '../../helpers/validator'
 
 const initData = {
     name: "",
@@ -24,15 +22,14 @@ const initData = {
     sex: "",
     card: "",
     isLoyalty: false,
-    coupon: "",
-    errors: {}
+    coupon: ""
 };
 
-class Registration extends Component {
+class UserInfo extends Component {
     constructor(props) {
         super(props);
 
-        this.state = { ...initData };
+        this.state = { ...(props.user || initData), errors: {} };
     }
 
     handleChange = ({ target }) => {
@@ -48,64 +45,25 @@ class Registration extends Component {
         });
     };
 
-    validate({
-        name,
-        surname,
-        sex,
-    }) {
-        const errors = {}
-
-        const regex = new RegExp(/^[A-Za-z]+$/)
-
-        if(!regex.test(name) || name.trim().length < 3) {
-            errors.name = 'Name should be at least 3 characters length and contain only latin characters.'
-        }
-
-        if(!regex.test(surname)) {
-            errors.surname = 'Surname should contain only latin characters.'
-        }
-
-        if(!sex.length) {
-            errors.sex = 'Gender is required.'
-        }
-
-        return errors;
-    }
-
     handleSubmit = (e) => {
         e.preventDefault()
-        const user = {
-            ..._.pick(this.state, [
-                'name',
-                'surname',
-                'sex',
-                'card',
-                'isLoyalty',
-                'coupon'
-            ]),
-            id: IncrementService.getNextId(),
-            registrationDate: new Date().toLocaleDateString()
-        }
+        const user = _.pick(this.state, [
+            'id',
+            'name',
+            'surname',
+            'sex',
+            'card',
+            'isLoyalty',
+            'coupon'
+        ])
 
-        const errors = this.validate(user)
+        const errors = validateUser(user)
         if (Object.keys(errors).length) {
             return this.setState({ errors })
         }
 
-        this.props.addUser(user);
-
-        toast.success(`User #${user.id}: ${user.name} ${user.surname} successfully added.`)
-
-        return this.setState({...initData});
+        return this.props.submit(user);
     };
-
-    clearMessage = () => {
-        this.setState({ message: '' });
-    }
-
-    componentWillUnmount() {
-        this.clearMessage();
-    }
 
     render() {
         const {
@@ -117,12 +75,10 @@ class Registration extends Component {
             coupon,
             errors
         } = this.state;
+
         return (
-            <Box className='RegistrationSection'>
-                <Title className='RegistrationSection-Title'>Add user</Title>
-                <ToastCustomContainer />
-                <form className='RegistrationForm'
-                      onFocus={this.clearMessage}
+            <Box className='UserInfoSection'>
+                <form className='UserInfoForm'
                       onSubmit={this.handleSubmit}>
                     <TextField
                         className='RegistrationForm-Field RegistrationForm-Field_name'
@@ -205,7 +161,7 @@ class Registration extends Component {
                         className='RegistrationForm-Button'
                         type='submit'
                     >
-                        Create
+                        Submit
                     </Button>
                 </form>
             </Box>
@@ -213,4 +169,4 @@ class Registration extends Component {
     }
 }
 
-export default Registration;
+export default UserInfo;

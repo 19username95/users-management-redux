@@ -5,12 +5,14 @@ import {
     Route,
     Redirect
 } from 'react-router-dom';
-import './App.scss';
-import { Navigation } from "../components";
 import { createMuiTheme, MuiThemeProvider } from "@material-ui/core";
 import { Provider } from "react-redux";
-import { store } from "../store";
-import { About, UsersList, Registration } from "../pages";
+import { ToastContainer } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
+import './App.scss';
+import { Navigation } from "../components";
+import { store } from "../redux/store";
+import { About, UsersList, Registration, EditUser } from "../pages";
 
 const theme = createMuiTheme({
     palette: {
@@ -25,6 +27,14 @@ class App extends React.Component {
             <Provider store={store}>
                 <MuiThemeProvider theme={theme}>
                     <Router>
+                        <ToastContainer
+                            autoClose={3000}
+                            position={"top-right"}
+                            closeOnClick={true}
+                            hideProgressBar={false}
+                            newestOnTop={true}
+                            rtl={false}
+                        />
                         <Navigation />
                         <Switch>
                             <Route path='/users-list'>
@@ -32,6 +42,9 @@ class App extends React.Component {
                             </Route>
                             <Route path='/add-user'>
                                 <Registration />
+                            </Route>
+                            <Route path='/edit-user/:id'>
+                                <EditUser />
                             </Route>
                             <Route path='/about'>
                                 <About />

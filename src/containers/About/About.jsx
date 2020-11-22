@@ -1,15 +1,9 @@
 import React from 'react';
+import { Avatar, Box, Link } from "@material-ui/core";
+import { Email, GitHub, LinkedIn, LocationOn, Phone, Telegram } from "@material-ui/icons";
 import './About.scss';
-import {Avatar, Box} from "@material-ui/core";
 import avatar from "../../assets/images/avatar.png";
-import {Email, GitHub, LinkedIn, LocationOn, Phone, Telegram} from "@material-ui/icons";
-import Title from "../Title/Title";
-import { Link } from "@material-ui/core";
-import Skill from "../Skill/Skill";
-import Institution from "../Institution/Institution";
-import Work from "../Work/Work";
-
-//const _star=`\u2B50`
+import { Title, Institution, Skill, Work } from '../../components';
 
 class About extends React.Component {
     render() {
