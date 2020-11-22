@@ -5,13 +5,14 @@ import IncrementService from "../../helpers/IncrementService";
 
 class Registration extends Component {
     submit = (user) => {
+        const id = IncrementService.getNextId();
         this.props.showToast(
-            `User #${user.id}: ${user.name} ${user.surname} successfully added.`,
+            `User #${id}: ${user.name} ${user.surname} successfully added.`,
             'success'
         )
         this.props.addUser({
             ...user,
-            id: IncrementService.getNextId(),
+            id,
             registrationDate: new Date().toLocaleDateString()
         })
         this.props.history.push('/users-list')
