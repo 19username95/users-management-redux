@@ -5,15 +5,14 @@ import {
     Route,
     Redirect
 } from 'react-router-dom';
-import './App.scss';
-import Navigation from "../components/Navigation/Navigation";
-import Registration from "../pages/Registration/Registration";
-import About from "../pages/About/About";
 import { createMuiTheme, MuiThemeProvider } from "@material-ui/core";
-import {Provider} from "react-redux";
-import {store} from "../store";
-import UsersListPage from "../pages/UsersListPage/UsersListPage";
-import {addUser} from "../actions/actions";
+import { Provider } from "react-redux";
+import { ToastContainer } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
+import './App.scss';
+import { Navigation } from "../components";
+import { store } from "../redux/store";
+import { About, UsersList, Registration, EditUser } from "../pages";
 
 const theme = createMuiTheme({
     palette: {
@@ -23,34 +22,29 @@ const theme = createMuiTheme({
 });
 
 class App extends React.Component {
-    constructor(props) {
-        super(props);
-
-        // initialize state
-        this.state = { users: [] }
-    }
-
-    componentDidMount() {
-        if (localStorage.hasOwnProperty("users")) {
-            // get users from local storage
-            const users = JSON.parse(localStorage.getItem("users"));
-            this.setState({ users })
-        }
-    }
-
-
     render() {
         return (
             <Provider store={store}>
                 <MuiThemeProvider theme={theme}>
                     <Router>
+                        <ToastContainer
+                            autoClose={3000}
+                            position={"top-right"}
+                            closeOnClick={true}
+                            hideProgressBar={false}
+                            newestOnTop={true}
+                            rtl={false}
+                        />
                         <Navigation />
                         <Switch>
                             <Route path='/users-list'>
-                                <UsersListPage users={this.state.users} />
+                                <UsersList />
                             </Route>
                             <Route path='/add-user'>
-                                <Registration addUser={addUser} />
+                                <Registration />
+                            </Route>
+                            <Route path='/edit-user/:id'>
+                                <EditUser />
                             </Route>
                             <Route path='/about'>
                                 <About />
