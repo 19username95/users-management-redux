@@ -81,7 +81,7 @@ class UserInfo extends Component {
                 <form className='UserInfoForm'
                       onSubmit={this.handleSubmit}>
                     <TextField
-                        className='RegistrationForm-Field RegistrationForm-Field_name'
+                        className='UserInfoForm-Field UserInfoForm-Field_name'
                         name="name"
                         label="Name"
                         required
@@ -91,7 +91,7 @@ class UserInfo extends Component {
                         helperText={errors.name}
                     />
                     <TextField
-                        className='RegistrationForm-Field RegistrationForm-Field_surname'
+                        className='UserInfoForm-Field UserInfoForm-Field_surname'
                         name="surname"
                         label="Surname"
                         required
@@ -101,36 +101,36 @@ class UserInfo extends Component {
                         helperText={errors.surname}
                     />
                     <FormControl component="fieldset"
-                                 className=' RegistrationForm-RadioField RegistrationForm-Field_gender'
+                                 className=' UserInfoForm-RadioField UserInfoForm-Field_gender'
                                  required
                                  error={!!errors.sex}
                     >
-                        <FormLabel className='RegistrationForm-RadioFieldLabel'
+                        <FormLabel className='UserInfoForm-RadioFieldLabel'
                                    component="legend">Gender</FormLabel>
-                        <RadioGroup className='RegistrationForm-RadioFieldGroup'
+                        <RadioGroup className='UserInfoForm-RadioFieldGroup'
                                     name="sex"
                                     value={sex}
                                     onChange={this.handleChange}>
-                            <FormControlLabel className='RegistrationForm-RadioButton'
+                            <FormControlLabel className='UserInfoForm-RadioButton'
                                               value="female"
                                               control={<Radio />}
                                               label="Female" />
-                            <FormControlLabel className='RegistrationForm-RadioButton'
+                            <FormControlLabel className='UserInfoForm-RadioButton'
                                               value="male"
                                               control={<Radio />}
                                               label="Male"/>
-                            <FormControlLabel className='RegistrationForm-RadioButton'
+                            <FormControlLabel className='UserInfoForm-RadioButton'
                                               value="other"
                                               control={<Radio />}
                                               label="Other"/>
                         </RadioGroup>
                         {!!errors.sex ? <FormHelperText>{errors.sex}</FormHelperText> : null}
                     </FormControl>
-                    <FormControl className='RegistrationForm-Field RegistrationForm-Field_card'>
-                        <FormLabel className='RegistrationForm-CardLabel'
+                    <FormControl className='UserInfoForm-Field UserInfoForm-Field_card'>
+                        <FormLabel className='UserInfoForm-CardLabel'
                                    component="legend">Credit card</FormLabel>
                         <InputMask
-                            className='RegistrationForm-CardInput'
+                            className='UserInfoForm-CardInput'
                             name="card"
                             label="Card"
                             value={card}
@@ -141,7 +141,7 @@ class UserInfo extends Component {
                     </FormControl>
 
                     <FormControlLabel
-                        className='RegistrationForm-Field RegistrationForm-Field_isLoyalty'
+                        className='UserInfoForm-Field UserInfoForm_isLoyalty'
                         control={
                             <Checkbox checked={isLoyalty}
                                       name="isLoyalty"
@@ -150,7 +150,7 @@ class UserInfo extends Component {
                         label='Loyalty program'/>
                     {isLoyalty ?
                         <TextField
-                            className='RegistrationForm-Field RegistrationForm-Field_coupon'
+                            className='UserInfoForm-Field UserInfoForm_coupon'
                             name="coupon"
                             label="Coupon"
                             required
@@ -158,7 +158,7 @@ class UserInfo extends Component {
                             onChange={this.handleChange}/>
                         : null}
                     <Button
-                        className='RegistrationForm-Button'
+                        className='UserInfoForm-Button'
                         type='submit'
                     >
                         Submit
