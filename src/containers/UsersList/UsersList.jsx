@@ -1,7 +1,7 @@
 import React from "react";
+import { withRouter } from 'react-router-dom'
 import './UsersList.scss';
-
-import Title from '../Title/Title';
+import { Title } from '../../components';
 
 import {
     Box,
@@ -11,9 +11,12 @@ import {
     TableHead,
     TableRow
 } from "@material-ui/core";
-import {connect} from "react-redux";
 
-const UsersList = ({ usersList: users }) => {
+const UsersList = ({ users, history }) => {
+    const goToEditUser = (id) => {
+        history.push(`/edit-user/${id}`)
+    }
+
     return (
         <Box className='UsersSection'>
             <Title className='UsersSection-UsersTitle'>Users</Title>
@@ -28,7 +31,7 @@ const UsersList = ({ usersList: users }) => {
                 </TableHead>
                 <TableBody className='UsersTable-Body'>
                     {users && users.map((user) => (
-                        <TableRow  className='UsersTable-BodyRow' key={user.id}>
+                        <TableRow  className='UsersTable-BodyRow' key={user.id} onClick={() => goToEditUser(user.id)}>
                             <TableCell className='UsersTable-BodyCell UsersTable-BodyCell_name'>{user.name} {user.surname}</TableCell>
                             <TableCell className='UsersTable-BodyCell UsersTable-BodyCell_sex'>{user.sex}</TableCell>
                             <TableCell className='UsersTable-BodyCell UsersTable-BodyCell_registration'>{user.registrationDate.toString()}</TableCell>
@@ -39,10 +42,6 @@ const UsersList = ({ usersList: users }) => {
             </Table>
         </Box>
     );
-};
+}
 
-const mapStateToProps = (state) => ({
-    usersList: state.users
-})
-
-export default connect(mapStateToProps)(UsersList);
+export default withRouter(UsersList);

@@ -5,6 +5,6 @@ class IncrementService {
     }
 }
 
-IncrementService.currentId = 0;
+IncrementService.currentId = 1;
 
 export default IncrementService;
