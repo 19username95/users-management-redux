@@ -5,7 +5,7 @@ import {
     Toolbar,
     Box
 } from "@material-ui/core"
-import {AccountCircle, Group, GroupAdd} from "@material-ui/icons";
+import {AccountCircle, Group, GroupAdd, Mood} from "@material-ui/icons";
 
 import './Navigation.scss';
 
@@ -23,6 +23,11 @@ const Navigation = () => {
                         <li className='Navigation-NavigationListItem'>
                             <NavLink className='Navigation-NavigationLink' to='/add-user'>
                                 <GroupAdd className='Navigation-NavigationLinkIcon'/>
+                            </NavLink>
+                        </li>
+                        <li className='Navigation-NavigationListItem'>
+                            <NavLink className='Navigation-NavigationLink' to='/jokes'>
+                                <Mood className='Navigation-NavigationLinkIcon'/>
                             </NavLink>
                         </li>
                         <li className='Navigation-NavigationListItem'>
