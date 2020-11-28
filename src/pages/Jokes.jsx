@@ -1,19 +1,31 @@
-import React from 'react';
+import React, { Component } from 'react';
 import { connect } from "react-redux";
 import { withRouter } from 'react-router-dom'
 import { Jokes } from "../containers";
+import {loadJoke} from "../redux/actions/jokes";
 
-const JokesPage = () => <Jokes />
-    // editUser={editUser}
-    // user={user}
-    // showToast={showToast}
+class JokesPage extends Component {
+    componentDidMount() {
+        this.props.loadJoke();
+        console.log(this.props);
+    }
 
-const mapStateToProps = (state, props) => ({
-    // user: state.users.list[props.match.params.id]
-})
+    render() {
+        return (
+            <Jokes joke={this.props.joke}
+                   isLoading={this.props.isLoading} />
+        );
+    }
+}
 
-const mapDispatchToProps = (dispatch) => ({
-   // showToast: (message, type) => dispatch(showToast(message, type)),
-})
+const mapStateToProps = (state) => ({
+    joke: state.joke.value,
+    isLoading: state.joke.isLoading,
+});
 
+const mapDispatchToProps = (dispatch) => {
+    return {
+        loadJoke: () => dispatch(loadJoke()),
+    };
+};
 export default withRouter(connect(mapStateToProps, mapDispatchToProps)(JokesPage))

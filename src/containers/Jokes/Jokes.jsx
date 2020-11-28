@@ -1,20 +1,15 @@
-import React, {Component} from 'react';
-import {withRouter} from "react-router-dom";
-import {
-    Box,
-    Typography
-} from "@material-ui/core";
+import React, { Fragment } from 'react';
+import { withRouter } from "react-router-dom";
+import { Title } from "../../components";
+import JokeForm from "../../components/JokeForm/JokeForm";
 
-class Jokes extends Component {
-    render() {
-        return (
-            <Box>
-                <Typography>
-                    Hi from jokes
-                </Typography>
-            </Box>
-        );
-    }
+const Jokes = ({ joke, isLoading }) => {
+    return (
+        <Fragment>
+            <Title>Jokes about Chuck Norris</Title>
+            <JokeForm joke={joke} isLoading={isLoading} />
+        </Fragment>
+    )
 }
 
 export default withRouter(Jokes);
