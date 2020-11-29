@@ -7,13 +7,13 @@ import {loadJoke} from "../redux/actions/jokes";
 class JokesPage extends Component {
     componentDidMount() {
         this.props.loadJoke();
-        console.log(this.props);
     }
 
     render() {
         return (
             <Jokes joke={this.props.joke}
-                   isLoading={this.props.isLoading} />
+                   isLoading={this.props.isLoading}
+                   getJoke={this.props.loadJoke}/>
         );
     }
 }
