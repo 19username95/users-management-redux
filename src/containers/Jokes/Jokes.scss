@@ -1,0 +1,13 @@
+@import "../../constants";
+
+  .Jokes-Button {
+    background-color: $red;
+    color: white;
+    margin-top: 7%;
+    width: 15%;
+  }
+
+.Jokes-Button:hover {
+  background-color: $red;
+  color: white;
+}
