@@ -1,11 +1,20 @@
-import {createStore, combineReducers} from "redux";
-import { usersReducer, toastsReducer } from "./reducers";
+import {
+    applyMiddleware,
+    compose,
+    createStore,
+    combineReducers
+} from "redux";
+import { usersReducer, toastsReducer, jokesReducer } from "./reducers";
+import thunk from "redux-thunk";
 
 export const store = createStore(
     combineReducers({
         users: usersReducer,
-        toast: toastsReducer
+        toast: toastsReducer,
+        joke: jokesReducer
     }),
-      window.__REDUX_DEVTOOLS_EXTENSION__
-    && window.__REDUX_DEVTOOLS_EXTENSION__()
+    compose(
+        applyMiddleware(thunk),
+        window.__REDUX_DEVTOOLS_EXTENSION__ && window.__REDUX_DEVTOOLS_EXTENSION__()
+    )
 );
