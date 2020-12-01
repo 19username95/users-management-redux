@@ -12,7 +12,7 @@ import 'react-toastify/dist/ReactToastify.css';
 import './App.scss';
 import { Navigation } from "../components";
 import { store } from "../redux/store";
-import { About, UsersList, Registration, EditUser } from "../pages";
+import {About, UsersList, Registration, EditUser, Jokes} from "../pages";
 
 const theme = createMuiTheme({
     palette: {
@@ -45,6 +45,9 @@ class App extends React.Component {
                             </Route>
                             <Route path='/edit-user/:id'>
                                 <EditUser />
+                            </Route>
+                            <Route path='/jokes'>
+                                <Jokes />
                             </Route>
                             <Route path='/about'>
                                 <About />
